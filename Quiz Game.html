@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI and ML Quiz</title>
+<style>
+:root{--bg:#eef2ff;--panel:#fff;--ink:#1b1f3b;--muted:#6b7096;--line:#dde2f7;--brand:#4f46e5;--ok:#12b886;--bad:#f03e3e;--warn:#f59f00;--sel:#e0e7ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12142a;--panel:#1c1f3d;--ink:#eef0ff;--muted:#9da2cc;--line:#32366a;--sel:#2c2f66}}
+:root[data-theme="dark"]{--bg:#12142a;--panel:#1c1f3d;--ink:#eef0ff;--muted:#9da2cc;--line:#32366a;--sel:#2c2f66}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:flex;justify-content:center;padding:24px 16px}
+.app{width:100%;max-width:560px}
+.card{background:var(--panel);border-radius:24px;padding:26px 22px;box-shadow:0 12px 40px rgba(79,70,229,.15);animation:pop .45s cubic-bezier(.2,1.3,.5,1)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+h1{margin:0 0 8px;font-size:30px}
+p{color:var(--muted);line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.tag{padding:6px 12px;border-radius:99px;font-size:13px;font-weight:600;color:#fff}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted);margin-bottom:10px}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),#a855f7);border-radius:9px;transition:width .5s}
+.type{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;color:#fff;margin-bottom:10px}
+.q{font-size:20px;font-weight:600;line-height:1.4;margin:0 0 18px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:500 16px inherit;font-family:inherit;color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px;cursor:pointer;transition:transform .15s,border-color .2s,background .2s}
+.opt:hover:not(:disabled){border-color:var(--brand);transform:translateX(4px)}
+.opt.sel{border-color:var(--brand);background:var(--sel)}
+.opt .mark{flex:none;width:22px;height:22px;border:2px solid var(--muted);display:grid;place-items:center;font-size:13px;color:#fff;transition:.2s}
+.opt.radio .mark{border-radius:50%}.opt.check .mark{border-radius:6px}
+.opt.sel .mark{background:var(--brand);border-color:var(--brand)}
+.opt.sel .mark::after{content:"\2713"}
+.opt.right{border-color:var(--ok);background:rgba(18,184,134,.14);animation:pulse .5s}
+.opt.wrong{border-color:var(--bad);background:rgba(240,62,62,.13);animation:shake .4s}
+.opt.right .mark{background:var(--ok);border-color:var(--ok)}
+.opt.wrong .mark{background:var(--bad);border-color:var(--bad)}
+.opt.wrong .mark::after{content:"\2715"}
+@keyframes shake{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+@keyframes pulse{50%{transform:scale(1.03)}}
+input.fill{width:100%;font:600 18px inherit;font-family:inherit;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--panel);color:var(--ink);outline:none;transition:border-color .2s}
+input.fill:focus{border-color:var(--brand)}
+input.fill.right{border-color:var(--ok);background:rgba(18,184,134,.14)}
+input.fill.wrong{border-color:var(--bad);background:rgba(240,62,62,.13);animation:shake .4s}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:15px;animation:pop .35s}
+.fb.ok{background:rgba(18,184,134,.14);color:var(--ok)}.fb.no{background:rgba(240,62,62,.13);color:var(--bad)}
+.btn{width:100%;margin-top:18px;border:0;border-radius:14px;padding:15px;font:600 16px inherit;font-family:inherit;color:#fff;background:var(--brand);cursor:pointer;transition:transform .12s,filter .2s,opacity .2s}
+.btn:hover:not(:disabled){filter:brightness(1.1)}.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.alt{background:transparent;color:var(--brand);border:2px solid var(--brand)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.res{text-align:center}
+.ring{position:relative;width:170px;height:170px;margin:6px auto 12px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:12}
+.ring .bg{stroke:var(--line)}.ring .fg{stroke-linecap:round;stroke-dasharray:452;stroke-dashoffset:452;transition:stroke-dashoffset 1.2s ease-out}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:38px}
+.rev{text-align:left;margin-top:20px}
+.ri{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.ri .dot{flex:none;width:22px;height:22px;border-radius:50%;color:#fff;display:grid;place-items:center;font-size:12px}
+.ri small{display:block;color:var(--muted);margin-top:2px}
+.conf{position:fixed;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.8}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app"><div class="card" id="card"></div></main>
+<script>
+(function(){
+  var TYPES={single:['Single choice','#4f46e5'],multi:['Multi select','#d6336c'],fill:['Fill in the blank','#e8590c'],tf:['True or false','#0c8599']};
+  var BANK=[
+    {t:'single',q:'Which type of machine learning trains on labeled examples?',o:['Supervised learning','Unsupervised learning','Reinforcement learning','Self-organizing maps'],a:[0],why:'Supervised models learn a mapping from inputs to known labels.'},
+    {t:'multi',q:'Select all the supervised learning algorithms.',o:['Linear regression','K-means','Decision tree','Logistic regression','PCA'],a:[0,2,3],why:'K-means (clustering) and PCA (dimensionality reduction) are unsupervised.'},
+    {t:'fill',q:'Neural networks update their weights using gradients passed from the output layer back to earlier layers. This algorithm is called ____ (one word).',a:['backpropagation','back-propagation','backprop'],show:'Backpropagation',why:'It applies the chain rule to compute each weight\'s gradient efficiently.'},
+    {t:'tf',q:'Overfitting means a model performs well on training data but poorly on unseen data.',a:[0],why:'The model memorizes noise in the training set instead of learning general patterns.'},
+    {t:'single',q:'Which activation function is defined as f(x) = max(0, x)?',o:['Sigmoid','Tanh','ReLU','Softmax'],a:[2],why:'ReLU is cheap to compute and helps reduce vanishing gradients.'},
+    {t:'multi',q:'Which of these are metrics for evaluating a classification model?',o:['Accuracy','Precision','Recall','F1 score','RMSE'],a:[0,1,2,3],why:'RMSE measures error in regression, not classification.'},
+    {t:'fill',q:'GPT stands for Generative Pre-trained ____.',a:['transformer'],show:'Transformer',why:'GPT models are built on the transformer architecture.'},
+    {t:'tf',q:'K-means clustering is a supervised learning algorithm.',a:[1],why:'K-means groups unlabeled data, so it is unsupervised.'},
+    {t:'single',q:'Which architecture was introduced in the 2017 paper "Attention Is All You Need"?',o:['CNN','RNN','Transformer','GAN'],a:[2],why:'It replaced recurrence with self-attention and powers modern LLMs.'},
+    {t:'fill',q:'Adapting a pre-trained model to a smaller, task-specific dataset is called fine-____.',a:['tuning'],show:'Tuning',why:'Fine-tuning reuses learned features so you need far less data and compute.'},
+    {t:'single',q:'Which technique randomly turns off neurons during training to reduce overfitting?',o:['Dropout','Batch normalization','Pooling','Data leakage'],a:[0],why:'Dropout forces the network not to rely on any single neuron.'},
+    {t:'multi',q:'Which of these are common deep learning architectures?',o:['CNN','RNN','Transformer','B-tree'],a:[0,1,2],why:'A B-tree is a database index structure.'}
+  ];
+  var card=document.getElementById('card'),Q,i,sel,score,log,done;
+  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+  function start(){
+    Q=shuffle(BANK).map(function(q){
+      if(q.o&&q.t!=='tf'){var idx=shuffle(q.o.map(function(_,n){return n}));return Object.assign({},q,{o:idx.map(function(n){return q.o[n]}),a:q.a.map(function(x){return idx.indexOf(x)})})}
+      return q});
+    i=0;score=0;log=[];show();
+  }
+  function home(){
+    var tags=Object.keys(TYPES).map(function(k){return '<span class="tag" style="background:'+TYPES[k][1]+'">'+TYPES[k][0]+'</span>'}).join('');
+    card.innerHTML='<h1>AI and ML Quiz</h1><p>Twelve questions on artificial intelligence and machine learning, in four question types. Pick or type your answer, check it, and see your score at the end.</p><div class="tags">'+tags+'</div><button class="btn" id="go">Start quiz</button>';
+    document.getElementById('go').onclick=function(){start2()};
+  }
+  function start2(){Q=Q||[];show()}
+  function show(){
+    var q=Q[i];sel=[];done=false;
+    var opts=q.t==='tf'?['True','False']:q.o,body='';
+    if(q.t==='fill')body='<input class="fill" id="fill" type="text" autocomplete="off" placeholder="Type your answer" aria-label="Your answer">';
+    else body=opts.map(function(o,n){return '<button class="opt '+(q.t==='multi'?'check':'radio')+'" data-n="'+n+'"><span class="mark"></span>'+esc(o)+'</button>'}).join('');
+    card.innerHTML='<div class="top"><span>Question '+(i+1)+' of '+Q.length+'</span><span>Score: '+score+'</span></div><div class="bar"><i style="width:'+(i/Q.length*100)+'%"></i></div>'
+      +'<span class="type" style="background:'+TYPES[q.t][1]+'">'+TYPES[q.t][0]+(q.t==='multi'?' \u2013 pick all that apply':'')+'</span><p class="q" style="color:var(--ink)">'+esc(q.q)+'</p><div id="body">'+body+'</div><div id="fb"></div><button class="btn" id="act" disabled>Check answer</button>';
+    requestAnimationFrame(function(){card.querySelector('.bar i').style.width=((i)/Q.length*100)+'%'});
+    var act=document.getElementById('act');
+    if(q.t==='fill'){var f=document.getElementById('fill');f.focus();f.oninput=function(){act.disabled=!f.value.trim()};f.onkeydown=function(e){if(e.key==='Enter'&&!act.disabled)act.click()}}
+    else card.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){
+      if(done)return;var n=+b.dataset.n;
+      if(q.t==='multi'){var p=sel.indexOf(n);if(p<0)sel.push(n);else sel.splice(p,1);b.classList.toggle('sel')}
+      else{sel=[n];card.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel')}
+      act.disabled=!sel.length}});
+    act.onclick=function(){done?next():check()};
+  }
+  function check(){
+    var q=Q[i],act=document.getElementById('act'),ok,given;
+    if(q.t==='fill'){
+      var f=document.getElementById('fill');given=f.value.trim();ok=q.a.indexOf(given.toLowerCase())>-1;
+      f.disabled=true;f.classList.add(ok?'right':'wrong');
+    }else{
+      var s=sel.slice().sort(),c=q.a.slice().sort();ok=s.join()===c.join();
+      var opts=q.t==='tf'?['True','False']:q.o;given=sel.map(function(n){return opts[n]}).join(', ');
+      card.querySelectorAll('.opt').forEach(function(b){
+        var n=+b.dataset.n;b.disabled=true;b.classList.remove('sel');
+        if(q.a.indexOf(n)>-1)b.classList.add('right');else if(sel.indexOf(n)>-1)b.classList.add('wrong');
+        b.classList.add(q.t==='multi'?'check':'radio')});
+      card.querySelectorAll('.opt.right .mark').forEach(function(m){m.textContent='\u2713'});
+    }
+    if(ok)score++;
+    var right=q.t==='fill'?q.show:(q.t==='tf'?['True','False'][q.a[0]]:q.a.map(function(n){return q.o[n]}).join(', '));
+    log.push({q:q.q,ok:ok,given:given,right:right});
+    document.getElementById('fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><b>'+(ok?'Correct! ':'Not quite. Answer: '+esc(right)+'. ')+'</b>'+esc(q.why)+'</div>';
+    done=true;act.textContent=i===Q.length-1?'See results':'Next question';
+  }
+  function next(){i++;i<Q.length?show():results()}
+  function results(){
+    var pct=Math.round(score/Q.length*100),col=pct>=70?'var(--ok)':(pct>=40?'var(--warn)':'var(--bad)');
+    var msg=pct===100?'Perfect score!':(pct>=70?'Great job!':(pct>=40?'Good effort. Try again to beat it.':'Keep practicing, you will get there.'));
+    var rev=log.map(function(l){return '<div class="ri"><span class="dot" style="background:'+(l.ok?'var(--ok)':'var(--bad)')+'">'+(l.ok?'\u2713':'\u2715')+'</span><div>'+esc(l.q)+'<small>'+(l.ok?'Your answer: '+esc(l.given):'Your answer: '+esc(l.given)+' \u2022 Correct: '+esc(l.right))+'</small></div></div>'}).join('');
+    card.innerHTML='<div class="res"><h1>Quiz complete</h1><div class="ring"><svg viewBox="0 0 160 160"><circle class="bg" cx="80" cy="80" r="72"/><circle class="fg" id="fg" cx="80" cy="80" r="72" stroke="'+col+'"/></svg><b>'+score+'/'+Q.length+'</b></div><p>'+pct+'% correct. '+msg+'</p></div><div class="rev">'+rev+'</div><button class="btn" id="again">Play again</button>';
+    setTimeout(function(){document.getElementById('fg').style.strokeDashoffset=452*(1-score/Q.length)},60);
+    document.getElementById('again').onclick=start;
+    if(pct>=70)confetti();
+  }
+  function confetti(){
+    var cs=['#4f46e5','#f59f00','#12b886','#d6336c','#0c8599'];
+    for(var k=0;k<40;k++){var e=document.createElement('i');e.className='conf';
+      e.style.left=Math.random()*100+'vw';e.style.background=cs[k%5];e.style.animationDuration=(1.6+Math.random()*1.6)+'s';e.style.animationDelay=Math.random()*.5+'s';
+      document.body.appendChild(e);setTimeout(function(x){x.remove()},4000,e)}
+  }
+  Q=shuffle(BANK);home();
+  document.getElementById('go').onclick=start;
+})();
+</script>
+</body>
+</html>
